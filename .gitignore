@@ -1,2 +1,43 @@
+# ----------------------------------------------------------------
+# Quarto / R / Python
+# ----------------------------------------------------------------
+
+# Quarto specific outputs and caches
 _site/
 _freeze/
+_book/
+
+# Rendered output files (optional, but recommended)
+# It's better to generate these on-demand than to store them in Git
+*.html
+*.pdf
+*.docx
+*.epub
+
+# R specific
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Python specific
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+/venv/
+/.venv/
+/env/
+/.env/
+*.egg-info/
+.DS_Store
+.ipynb_checkpoints/
+.quarto
+
+
+# ----------------------------------------------------------------
+# Editor & OS Files
+# ----------------------------------------------------------------
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.
