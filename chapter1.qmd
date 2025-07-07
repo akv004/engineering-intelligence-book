@@ -43,3 +43,20 @@ Beyond the processing paradigm, this layer must perform several critical functio
 -   **Schema Management:** As data sources evolve, their schemas will inevitably change. The ingestion layer must have a strategy for managing these changes gracefully, using tools like a schema registry to prevent downstream applications from breaking unexpectedly.
 
 Designing this layer is a balancing act between throughput, latency, reliability, and cost. A poorly architected ingestion pipeline is a constant source of technical debt and operational pain, and it is one of the most common reasons that promising AI projects fail to reach production.
+
+### 2. The Data Core: Feature Stores & Data Lakehouses (NEW)
+
+If the ingestion layer is the digestive tract, the Data Core is the heart and circulatory system. It is the central repository where clean, validated, and feature-engineered data is stored, managed, and made available for both model training and real-time inference. A well-architected Data Core is the single source of truth for all data-related activities, ensuring consistency and reliability across the entire AI ecosystem.
+
+Historically, this role was filled by traditional data warehouses or data lakes. However, the unique demands of operational AI have led to the evolution of two more specialized components: the **Lakehouse** and the **Feature Store**.
+
+* **The Data Lakehouse:** A modern architectural pattern that combines the flexibility and low cost of a data lake (which stores vast amounts of raw data in open formats) with the performance and management features of a data warehouse. Technologies like Delta Lake, Apache Iceberg, and Apache Hudi enable this by adding a transactional layer on top of standard object storage. This allows for ACID transactions, data versioning ("time travel"), and schema enforcement directly on the data lake, providing a robust foundation for both BI analytics and large-scale model training.
+
+* **The Feature Store:** This is arguably the most critical architectural innovation for operational ML in the last decade. A Feature Store is a centralized, curated library of features—the predictive variables used by models (e.g., `user_7day_purchase_count`, `product_embedding_vector`). It solves one of the most insidious problems in production AI: **training-serving skew**. This occurs when the features used to train a model are calculated differently from the features used for live predictions, leading to a silent degradation of performance.
+
+A Feature Store solves this by providing a dual interface:
+
+-   An **Offline Store**, typically built on the Data Lakehouse, serves historical feature data for model training and exploration. Data scientists can query this store to build large training datasets without re-calculating features from scratch every time.
+-   An **Online Store**, a low-latency database (like Redis or DynamoDB), serves the most recent feature values for real-time inference. When a prediction request comes in, the application fetches the necessary features from the online store with millisecond latency.
+
+The key is that the logic for calculating a feature is defined once and applied consistently to populate both stores. This guarantees that the model sees the exact same data structure in production as it did in training. Furthermore, the Feature Store acts as a collaboration hub, allowing different teams to discover, share, and reuse features, dramatically accelerating the development lifecycle and reducing redundant work.

@@ -6,9 +6,15 @@
 _site/
 _freeze/
 _book/
+.quarto/
 
-# Rendered output files (optional, but recommended)
-# It's better to generate these on-demand than to store them in Git
+# Cache directories for individual documents (e.g., from code execution)
+*_cache/
+
+# Supporting files for individual HTML documents (e.g., plots)
+*_files/
+
+# Rendered output files (often generated during `quarto preview`)
 *.html
 *.pdf
 *.docx
@@ -64,16 +70,3 @@ Desktop.ini
 # Temporary files
 *.tmp
 *~
-
-.DS_Store
-.ipynb_checkpoints/
-.quarto
-
-
-# ----------------------------------------------------------------
-# Editor & OS Files
-# ----------------------------------------------------------------
-
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.
