@@ -61,7 +61,7 @@ A Feature Store solves this by providing a dual interface:
 
 The key is that the logic for calculating a feature is defined once and applied consistently to populate both stores. This guarantees that the model sees the exact same data structure in production as it did in training. Furthermore, the Feature Store acts as a collaboration hub, allowing different teams to discover, share, and reuse features, dramatically accelerating the development lifecycle and reducing redundant work.
 
-### 3. The Model Development & Training Environment (NEW)
+### 3. The Model Development & Training Environment
 
 This is the system's "research and development lab." It is a dedicated, sandboxed environment where data scientists and ML engineers can explore data, prototype algorithms, and systematically train models to find the highest-performing candidate for production. To the uninitiated, this environment might look like a simple collection of Jupyter notebooks. But a truly effective training environment is a sophisticated platform architected for three things: **collaboration, reproducibility, and scale.**
 
@@ -78,3 +78,19 @@ This is the system's "research and development lab." It is a dedicated, sandboxe
 - **Scale:** Modern models, especially in deep learning, are often too large to train on a single machine. The training environment must provide access to powerful computational resources, including GPUs and TPUs, and support **Distributed Training**. This involves parallelizing the training process across a cluster of machines. Frameworks like Horovod or native integrations in TensorFlow and PyTorch allow a team to take a model that would require weeks to train on one GPU and complete the job in a matter of hours, dramatically accelerating the iteration cycle.
 
 Architecting this environment means providing these capabilities as a self-serve platform. The goal is to empower data scientists to run complex experiments without needing to become experts in cloud infrastructure or Kubernetes. A world-class training environment is an accelerator; it removes friction and allows the brightest minds to focus on what they do best: building intelligence.
+
+### 4. The Model Registry (NEW)
+
+Once a promising model candidate emerges from the iterative cycle of development and training, it cannot be thrown haphazardly over the wall into production. It must first be formally inducted into the **Model Registry**. If the training environment is the R&D lab, the Model Registry is the system's official library, patent office, and quality assurance department all rolled into one. It is a centralized, version-controlled repository that serves as the single source of truth for all production-ready and candidate models.
+
+A Model Registry is far more than a simple file storage system. It is a critical governance and MLOps tool that manages the lifecycle of a model as it progresses from an experimental artifact to a production-grade asset. Its core responsibilities include:
+
+-   **Versioning and Lineage:** Just as Git versions source code, a Model Registry versions trained models. Each registered model is given a unique version number (e.g., `fraud-detector:v1.2.3`). Crucially, the registry maintains the model's complete **lineage**, linking it back to the exact experiment tracking run that produced it. This means for any model in the registry, we can instantly trace back to the source code, the data, the hyperparameters, and the performance metrics that created it. This traceability is non-negotiable for debugging, auditing, and regulatory compliance.
+
+-   **Metadata and Schema Management:** The registry stores rich metadata alongside the model artifact itself. This includes human-readable descriptions of the model's purpose, its intended use cases, and its known limitations. It also stores technical metadata, such as the schema of the expected input features and the schema of the predicted output. This information is invaluable for downstream systems that need to integrate with the model.
+
+-   **Lifecycle Staging:** Models, like software, go through stages. The registry formalizes this process, allowing models to be tagged with labels like `Staging`, `Production`, or `Archived`. Automated CI/CD pipelines for machine learning (MLOps) use these stages as triggers. For example, promoting a model from `Staging` to `Production` could automatically kick off a deployment process that canary tests the new model against the old one.
+
+-   **Model Discovery:** In a large organization, the registry prevents "re-inventing the wheel." It provides a searchable, documented catalog of all available models, allowing teams to discover and potentially reuse existing models instead of building new ones from scratch.
+
+Without a Model Registry, an organization is flying blind. There is no control, no governance, and no reliable path to production. It is the architectural component that instills discipline, turning the creative chaos of model development into a predictable, auditable, and scalable operational workflow. It is the true hand-off point between "data science" and "production engineering."
