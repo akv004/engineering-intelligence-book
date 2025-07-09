@@ -1,0 +1,7 @@
+# Chapter 3: Designing for Data: From Gravity to Governance
+
+In the anatomy of our AI system, data is the lifeblood. It flows through every component, from the ingestion pipelines to the final feedback loop. It is tempting, then, to think of data as a fluid, easily moved and manipulated. This is a dangerous misconception. In reality, data has mass. It has inertia. It has, for lack of a better term, *gravity*. The largest and most important datasets in an organization exert a powerful pull, attracting services, applications, and compute resources to orbit around them.
+
+Ignoring this fundamental law of data gravity is one of the most common and costly mistakes in system architecture. We build our applications in one cloud, while our data lives in another, leading to exorbitant egress fees and crippling latency. We design a brilliant model but fail to consider how it will access the terabytes of data required for training.
+
+This chapter is about designing with data as the central, immovable object in our architectural universe. We will explore the two foundational concepts that every AI architect must master: understanding the physics of **Data Gravity** and implementing the discipline of **Data Governance**. By mastering these, we can move from simply *using* data to truly *engineering* it, building systems that are not only powerful but also efficient, secure, and built to last.
