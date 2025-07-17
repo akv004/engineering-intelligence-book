@@ -1,12 +1,12 @@
 # Chapter 3: Feature Engineering at Scale: From Raw Data to Predictive Signals
 
-## Introduction: The Unsung Hero of AI
+### Introduction: The Unsung Hero of AI
 
 In the world of AI architectures, feature engineering is often the unsung hero that determines success or failure. While cutting-edge models and algorithms grab the spotlight, seasoned practitioners know that the true magic in the AI pipeline happens long before the model is ever trained. Feature engineering is the process of transforming raw data into the informative input signals—the features—that machine learning models consume. In most cases, well-designed features can boost a model’s performance more than tweaking the algorithm itself.
 
 In this chapter, we bridge the gap between the data architecture discussed previously and the world of model development by focusing on how to create and manage features at scale. In modern AI systems, models have become incredibly powerful, but that also makes them more sensitive to data quality and representation. A robust feature engineering process is critical for translating your raw data assets into predictive signals that drive intelligent decisions. This chapter will highlight how to do this effectively at scale—dealing with large data volumes, real-time requirements, and the need for consistency across environments.
 
-## The Art and Science of Feature Creation
+### The Art and Science of Feature Creation
 
 Feature engineering lies at the intersection of art and science. It requires creativity and domain intuition to imagine which transformations of raw data might be predictive, and it demands scientific rigor to implement those transformations correctly and efficiently. The goal is to extract signal from raw data and represent it in a way that a model can easily learn from.
 
@@ -14,15 +14,24 @@ Common techniques include creating time-based features (like rolling averages), 
 
 Designing a feature engineering platform to support these techniques at scale is a key architectural challenge. We need systems that can reliably compute features from terabytes of raw data and do so continuously as new data arrives. An architect’s perspective means building infrastructure that makes feature creation reproducible, scalable, and consistent. The end goal is to enable data scientists to craft new features quickly while ensuring that the computations are correct, efficient, and integrated with the overall data pipeline.
 
-## The Feature Lifecycle: From Idea to Production
+### The Feature Lifecycle: From Idea to Production
 
 Features have a lifecycle similar to software artifacts. They are conceived, developed, deployed, monitored, and eventually retired. Understanding this lifecycle helps in designing processes and tools for feature engineering at scale.
 
-1.  **Ideation & Prototyping:** Every feature begins as a hypothesis. A data scientist explores raw data and experiments to see if a transformation has predictive power.
-2.  **Development & Validation:** Once an idea shows promise, the transformation logic is implemented robustly, often as part of a feature pipeline. The logic is tested for correctness and edge cases.
-3.  **Deployment (Training & Serving):** After validation, the new feature is deployed. This means backfilling the feature for historical data (for training) and integrating it into live processes (for serving). This is where a Feature Store becomes critical, ensuring the feature's definition remains consistent in both environments.
-4.  **Monitoring & Maintenance:** A deployed feature must be monitored for data quality issues and statistical drift. Monitoring can catch upstream data pipeline breaks and detect concept drift early. Maintenance also includes versioning and tracking lineage to understand how a feature was computed and which models depend on it.
-5.  **Deprecation:** Eventually, some features become obsolete. Part of the lifecycle is to periodically review and deprecate those that are no longer needed to keep the system lean and maintainable.
+#### 1. Ideation & Prototyping
+Every feature begins as a hypothesis. A data scientist explores raw data and experiments to see if a transformation has predictive power.
+
+#### 2. Development & Validation
+Once an idea shows promise, the transformation logic is implemented robustly, often as part of a feature pipeline. The logic is tested for correctness and edge cases.
+
+#### 3. Deployment (Training & Serving)
+After validation, the new feature is deployed. This means backfilling the feature for historical data (for training) and integrating it into live processes (for serving). This is where a Feature Store becomes critical, ensuring the feature's definition remains consistent in both environments.
+
+#### 4. Monitoring & Maintenance
+A deployed feature must be monitored for data quality issues and statistical drift. Monitoring can catch upstream data pipeline breaks and detect concept drift early. Maintenance also includes versioning and tracking lineage to understand how a feature was computed and which models depend on it.
+
+#### 5. Deprecation
+Eventually, some features become obsolete. Part of the lifecycle is to periodically review and deprecate those that are no longer needed to keep the system lean and maintainable.
 
 :::{.callout-note}
 **Diagram Hint: The Feature Lifecycle**
@@ -32,7 +41,7 @@ Features have a lifecycle similar to software artifacts. They are conceived, dev
 `![The Feature Lifecycle](images/feature-lifecycle.png)`
 :::
 
-## The Great Divide: Batch vs. Real-Time Feature Computation
+### The Great Divide: Batch vs. Real-Time Feature Computation
 
 One of the most critical architectural challenges in feature engineering is handling the two worlds where features live: the offline (batch) world and the online (real-time) world. In the offline world, we compute features in bulk on historical data for model training. In the online world, we need feature values at inference time, often for a single event with low latency.
 
@@ -45,7 +54,7 @@ Modern ML architecture strives to eliminate this skew by unifying how features a
 
 Architecturally, tackling this divide has led to the rise of the Feature Store, which provides a unified framework to manage offline and online features, largely solving the consistency problem.
 
-## The Feature Store as the Architectural Solution
+### The Feature Store as the Architectural Solution
 
 As we've established, a feature store is an ML-specific data system that manages the end-to-end lifecycle of features. It is the interface between models and data, taking care of transforming raw data into features, storing them, and serving them for both training and inference.
 
@@ -59,7 +68,7 @@ Let’s break down its core capabilities:
 
 In short, feature stores solve the data engineering problems unique to machine learning. They bring consistency, productivity, scalability, and governance to the feature engineering process, making them a necessary component of a modern, operational ML stack.
 
-## Conclusion: Features as the True Language of Models
+### Conclusion: Features as the True Language of Models
 
 Feature engineering is not just a preprocessing step; it is the heart of an AI system’s intelligence. Features are the language that your data speaks to your models. By mastering feature engineering at scale, organizations can build far more accurate, reliable, and maintainable AI solutions.
 
