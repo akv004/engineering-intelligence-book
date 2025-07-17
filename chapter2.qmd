@@ -36,7 +36,7 @@ Architecting for data gravity means conducting a thorough analysis of your data 
 
 The answers will form the gravitational map of your system, guiding your infrastructure decisions and preventing you from fighting a costly, uphill battle against the fundamental physics of your own data.
 
-### The Discipline of Data Governance (NEW)
+### The Discipline of Data Governance
 
 If data gravity is the law of physics we must obey, then data governance is the law of the land we must establish. Knowing *where* your data lives is only the first step. Governance answers the far more complex questions: What is this data? Can I trust it? Who is allowed to see it? How has it changed over time?
 
@@ -75,7 +75,47 @@ The catalog automatically ingests metadata from your data sources and enriches i
 
 All major cloud providers offer data cataloging solutions that integrate tightly with their ecosystems:
 -   **AWS:** AWS Glue Data Catalog
--   **Azure:** Azure Purview
+-   **Azure:** Microsoft Purview
 -   **GCP:** Google Cloud Data Catalog
 
 By implementing a data catalog, you democratize access to data while simultaneously enforcing governance, ensuring that your teams can build on a foundation of trusted, well-documented, and secure information.
+
+### Modern Data Architecture Patterns for AI (NEW)
+
+Obeying gravity and establishing governance are the essential foundations. Now we can turn to strategy. How do we arrange these governed components into a coherent, organization-wide architecture that promotes agility and innovation? The industry is currently in the midst of a great debate between two competing philosophies.
+
+#### The Great Debate: Centralized Lakehouse vs. Decentralized Data Mesh
+
+For the past decade, the dominant approach has been the **Centralized Data Lakehouse**. In this model, a single, central data platform team is responsible for ingesting all of the organization's data into one massive, unified repository (e.g., a data lakehouse built on Databricks, Snowflake, or a cloud-native solution like Amazon Redshift or Google BigQuery). This central team cleans, structures, and serves the data to the rest of the business, including the AI teams.
+-   **Pros:** Strong central governance, economies of scale, a single source of truth.
+-   **Cons:** The central team often becomes a bottleneck, unable to keep up with the diverse needs of the business. They lack the domain-specific context to truly understand the data they are managing.
+
+In response to these challenges, the **Data Mesh** has emerged as a powerful alternative. A Data Mesh is a decentralized, socio-technical approach that flips the traditional model on its head. Instead of a central pipeline, it advocates for **domain-oriented data ownership**.
+-   **The Core Idea:** The team that knows the most about the data should own it. The "Marketing" team owns the marketing data; the "Logistics" team owns the supply chain data.
+-   **Data as a Product:** Each domain is responsible for treating its data as a first-class product. They must clean, secure, and serve their data products to the rest of the organization via well-defined, self-serve APIs. The "Marketing" team might expose a "Customer 360" data product that the AI team can then easily consume to build a churn prediction model.
+-   **Self-Serve Infrastructure:** A central platform team still exists, but their role changes. Instead of managing data pipelines, they provide a common, self-serve infrastructure platform that allows the domain teams to easily build, deploy, and manage their own data products.
+
+For AI teams, a Data Mesh can be a massive accelerator. It removes the dependency on a slow-moving central team and provides direct access to high-quality, domain-curated data products. However, it requires a significant cultural shift and a high degree of engineering maturity across the organization.
+
+:::{.callout-note}
+**Diagram Hint: Centralized vs. Data Mesh**
+
+**Generation Prompt:** "Create a two-panel diagram comparing data architectures. Panel 1, 'Centralized Lakehouse', shows multiple 'Domain' sources (Marketing, Sales, etc.) feeding into a single large 'Central Data Team' box, which then serves data to consumers. Panel 2, 'Data Mesh', shows the 'Domain' boxes as self-contained units, each with its own data and API, directly serving consumers. A smaller 'Platform Team' box sits underneath, providing common infrastructure to all domains. Use clear arrows to show the flow of data and responsibility."
+
+`![Centralized vs Data Mesh](images/data-mesh-comparison.png)`
+:::
+
+#### Enforcing Standards with Data Contracts
+
+How do you maintain quality and trust in a decentralized Data Mesh? The answer lies in another modern innovation: the **Data Contract**.
+
+A Data Contract is a formal, machine-readable agreement between a data producer (e.g., the Marketing domain's data product) and a data consumer (e.g., the AI team's model training pipeline). It is an API for your data. The contract is typically defined in a YAML file and version-controlled alongside the producer's code. It explicitly defines:
+-   **Schema:** The exact names, data types, and constraints of the fields.
+-   **Data Quality Rules:** Assertions that must hold true (e.g., `user_id` must never be null).
+-   **Service Level Objectives (SLOs):** Guarantees about data freshness or update frequency.
+
+This contract is then enforced by automated tooling within the CI/CD pipeline. If the producing team tries to push a code change that would violate the contract (e.g., changing a column name), the build fails automatically. This prevents breaking changes from ever reaching production and poisoning downstream consumers like your AI models. It shifts data quality from a reactive, after-the-fact monitoring problem to a proactive, prevention-focused engineering discipline.
+
+### Chapter Conclusion
+
+We began this chapter by acknowledging the physical reality of Data Gravity and ended with the strategic discipline of Data Governance and modern architectural patterns. The key takeaway is that data is not a secondary concern in AI system design; it is the primary one. Before you choose a model, a framework, or even a cloud provider, you must first understand the shape, mass, and legal constraints of your data. By architecting for gravity, governing with discipline, and choosing a strategic pattern like the Lakehouse or Data Mesh, you build your system on a foundation of solid rock instead of shifting sand.
